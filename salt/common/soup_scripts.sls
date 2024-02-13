@@ -1,4 +1,4 @@
-{% CURRENT_VERSION = salt['pillar.get']('global:soversion') %}
+{% set CURRENT_VERSION = salt['pillar.get']('global:soversion') %}
 {% if salt['file.directory_exists']('/tmp/soagupdate/SecurityOnion') or salt['file.directory_exists']('/tmp/sogh/securityonion') %}
 
 update_common_scripts:
