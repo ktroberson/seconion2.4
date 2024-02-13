@@ -9,7 +9,7 @@ update_common_scripts:
     - file_mode: 755
 {%  if salt['file.directory_exists']('/tmp/soagupdate/SecurityOnion') %}
     - source: /tmp/soagupdate/SecurityOnion/salt/common/tools/sbin/
-{%  else salt['file.direcory_exists'('/tmp/sogh/securityonion')] %}
+{%  else salt['file.directory_exists']('/tmp/sogh/securityonion') %}
     - source: /tmp/sogh/securityonion/salt/common/tools/sbin/
 {%  endif %}
     - include_pat:
