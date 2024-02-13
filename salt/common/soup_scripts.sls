@@ -1,34 +1,21 @@
-{% set CURRENT_VERSION = salt['pillar.get']('global:soversion') %}
-{% if salt['file.directory_exists']('/tmp/soagupdate/SecurityOnion') or salt['file.directory_exists']('/tmp/sogh/securityonion') %}
+remove_common_soup:
+  file.absent:
+    - name: /opt/so/saltstack/default/salt/common/tools/sbin/soup
 
-update_common_scripts:
-  file.recurse:
-    - name: /usr/sbin
-    - user: root
-    - group: root
-    - file_mode: 755
-{%  if salt['file.directory_exists']('/tmp/soagupdate/SecurityOnion') %}
-    - source: /tmp/soagupdate/SecurityOnion/salt/common/tools/sbin/
-{%  elif salt['file.directory_exists']('/tmp/sogh/securityonion') %}
-    - source: /tmp/sogh/securityonion/salt/common/tools/sbin/
-{%  endif %}
-    - include_pat:
-        - so-common
-        - so-image-common
-update_manager_scripts:
-  file.recurse:
-    - name: /usr/sbin
-    - user: root
-    - group: root
-    - file_mode: 755
-{%  if salt['file.directory_exists']('/tmp/soagupdate/SecurityOnion') %}
-    - source: /tmp/soagupdate/SecurityOnion/salt/manager/tools/sbin/
-{%  elif salt['file.directory_exists']('/tmp/sogh/securityonion') %}
-    - source: /tmo/sogh/securityonion/salt/manager/tools/sbin/
-{%  endif %}
-    - include_pat:
-        - so-firewall
-        - so-repo-sync
-        - soup
+remove_common_so-firewall:
+  file.absent:
+    - name: /opt/so/saltstack/default/salt/common/tools/sbin/so-firewall
 
+{% if salt['pillar.get']('global:airgap') %}
+{%   set UPDATE_DIR='/tmp/soagupdate/SecurityOnion'%}
+{% else %}
+{%   set UPDATE_DIR='/tmp/sogh/securityonion'%}
 {% endif %}
+
+copy_common:
+  cmd.run:
+    - name: cp {{ UPDATE_DIR }}/salt/common/tools/sbin/* /usr/sbin/.
+
+copy_manager:
+  cmd.run:
+    - name: cp {{ UPDATE_DIR }}/salt/manager/tools/sbin/* /usr/sbin/.
