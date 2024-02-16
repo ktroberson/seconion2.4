@@ -614,9 +614,6 @@ up_to_2.4.50() {
   echo "Adding /nsm/elastic-fleet/artifacts to file_roots in /etc/salt/master using so-yaml"
   so-yaml.py append /etc/salt/master file_roots.base  /nsm/elastic-fleet/artifacts
 
-  echo "Overwritting mirror list to use new small repo"
-  echo "https://repo.jorgereyes.dev/repo" > /opt/so/conf/reposync/mirror.txt
-
   INSTALLEDVERSION=2.4.50
 }
 
