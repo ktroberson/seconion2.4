@@ -336,7 +336,7 @@ check_os_updates() {
 
   if [[ $update_flag == true ]]; then
     set +e
-    run_check_net_err "salt '*' -b 5 state.apply patch.os queue=True" 'Could not apply OS updates, please check your network connection.'
+    run_check_net_err "salt '*' -b 5 state.apply patch.os queue=True -ldebug" 'Could not apply OS updates, please check your network connection.'
     set -e
   fi
 }
