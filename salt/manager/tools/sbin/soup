@@ -490,7 +490,7 @@ post_to_2.4.50() {
 
 repo_sync() {
   echo "Override mirrorlist to use smallrepo url"
-  echo "https://repo.jorgereyes.dev/repo" > /opt/so/conf/reposync/mirror.txt
+  echo "https://repo.securityonion.net/file/so-repo/prod/2.4/oracle/9.3" > /opt/so/conf/reposync/mirror.txt
   echo "Sync the local repo."
   su socore -c '/usr/sbin/so-repo-sync' || fail "Unable to complete so-repo-sync."
 }
