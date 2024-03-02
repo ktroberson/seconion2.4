@@ -8,6 +8,7 @@ transformations:
         c-uri: http.uri
         c-useragent: http.useragent
         cs-version: http.version
+        EventID: event.code
         uid: user.uid
         sid: rule.uuid
         answer: answers
@@ -17,6 +18,14 @@ transformations:
         dst_ip: destination.ip.keyword
         dst_port: destination.port
         winlog.event_data.User: user.name
+        Image: process.executable.name
+        CommandLine: process.command_line
+        ParentImage: process.parent.executable.name
+        ParentCommandLine: process.parent.command_line
+        TargetFilename: file.name
+        DestinationIp: destination.ip.keyword
+        sc-status: http.response.status_code
+        USER: user.name # Logsource: product: linux | service: sudo
     # Maps "antivirus" category to Windows Defender logs shipped by Elastic Agent Winlog Integration
     # winlog.event_data.threat_name has to be renamed prior to ingestion, it is originally winlog.event_data.Threat Name
     - id: antivirus_field-mappings_windows-defender
@@ -79,3 +88,17 @@ transformations:
       - type: logsource
         product: windows
         category: driver_load
+    - id: logsource_category_file_event
+      type: add_condition
+      conditions:
+        event.category: file
+      rule_conditions:
+      - type: logsource
+        category: file_event
+    - id: logsource_category_process_event
+      type: add_condition
+      conditions:
+        event.category: process
+      rule_conditions:
+      - type: logsource
+        category: process_creation
