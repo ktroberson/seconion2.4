@@ -18,9 +18,9 @@ transformations:
         dst_ip: destination.ip.keyword
         dst_port: destination.port
         winlog.event_data.User: user.name
-        Image: process.executable.name
+        Image: process.executable
         CommandLine: process.command_line
-        ParentImage: process.parent.executable.name
+        ParentImage: process.parent.executable
         ParentCommandLine: process.parent.command_line
         TargetFilename: file.name
         DestinationIp: destination.ip.keyword
@@ -88,17 +88,3 @@ transformations:
       - type: logsource
         product: windows
         category: driver_load
-    - id: logsource_category_file_event
-      type: add_condition
-      conditions:
-        event.category: file
-      rule_conditions:
-      - type: logsource
-        category: file_event
-    - id: logsource_category_process_event
-      type: add_condition
-      conditions:
-        event.category: process
-      rule_conditions:
-      - type: logsource
-        category: process_creation
